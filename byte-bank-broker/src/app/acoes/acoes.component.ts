@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Acoes } from '../acoes/modelos/acoes';
 import { AcoesService } from './acoes.service';
-
 @Component({
   selector: 'app-acoes',
   templateUrl: './acoes.component.html',
@@ -11,13 +9,21 @@ import { AcoesService } from './acoes.service';
 export class AcoesComponent {
 
   acoesInput = new FormControl();
-  acoes: Acoes;
+  // acoes: Acoes;
+  // unsubscribeAcoes: Subscription;
+  acoes$ = this.acoesService.getAcoes();
 
-  constructor(private acoesService: AcoesService) {}
+  constructor(private acoesService: AcoesService) { }
 
   ngOnInit() {
-    this.acoesService.getAcoes().subscribe(acoes => {
-      this.acoes = acoes.payload;
-    });
+    // this.unsubscribeAcoes = this.acoesService.getAcoes()
+    //   .subscribe(acoes => {
+    //     this.acoes = acoes;
+    //   });
+  }
+
+  ngOnDestroy() {
+    console.log('unsubscribed');
+    // this.unsubscribeAcoes.unsubscribe();
   }
 }
