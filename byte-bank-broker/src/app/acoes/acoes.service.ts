@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { map, pluck } from 'rxjs/operators';
@@ -11,8 +11,9 @@ export class AcoesService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getAcoes() {
-    return this.httpClient.get<AcoesAPI>(`${environment.api}/acoes`)
+  getAcoes(nomeAcao?: string) {
+    const params = nomeAcao ? new HttpParams().append('valor', nomeAcao) : undefined;
+    return this.httpClient.get<AcoesAPI>(`${environment.api}/acoes`, { params })
       .pipe(
         pluck('payload'),
         map(acoes => acoes.sort((acaoA, acaoB) => this._orderByCode(acaoA, acaoB)))
