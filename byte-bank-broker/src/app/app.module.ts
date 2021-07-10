@@ -6,9 +6,17 @@ import { RouterModule } from '@angular/router';
 import { CoreModule } from './core/core.module';
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [CoreModule, AppRoutingModule, RouterModule.forRoot([])],
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    CoreModule,
+    AppRoutingModule,
+    RouterModule.forRoot([])
+  ],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [
+    AppComponent
+  ],
 })
-export class AppModule {}
+export class AppModule { }
