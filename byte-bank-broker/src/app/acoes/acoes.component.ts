@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { merge } from 'rxjs';
-import { debounceTime, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, switchMap, tap } from 'rxjs/operators';
 import { AcoesService } from './acoes.service';
 @Component({
   selector: 'app-acoes',
@@ -17,8 +17,12 @@ export class AcoesComponent {
   todasAcoes$ = this.acoesService.getAcoes()
     .pipe(
       tap(fluxo => console.log(fluxo + ' inicial')));
+
   filtroInput$ = this.acoesInput.valueChanges.pipe(
-    debounceTime(1000),
+    tap(console.log),
+    debounceTime(700),
+    filter(nomeAcao => nomeAcao.length >= 3 || !nomeAcao.length),
+    distinctUntilChanged(),
     switchMap(nomeAcao => this.acoesService.getAcoes(nomeAcao)),
     tap(fluxo => console.log(fluxo + ' filtro'))
   );
